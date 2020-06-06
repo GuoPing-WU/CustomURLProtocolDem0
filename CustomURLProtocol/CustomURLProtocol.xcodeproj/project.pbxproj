@@ -200,10 +200,10 @@
 		EA5802E2248BA40500305429 /* NSURLProtocol */ = {
 			isa = PBXGroup;
 			children = (
-				EA5802E3248BA40500305429 /* SessionConfigurationHook.h */,
 				EA5802E4248BA40500305429 /* CustomURLProtocol.h */,
-				EA5802E5248BA40500305429 /* SessionConfigurationHook.m */,
 				EA5802E6248BA40500305429 /* CustomURLProtocol.m */,
+				EA5802E3248BA40500305429 /* SessionConfigurationHook.h */,
+				EA5802E5248BA40500305429 /* SessionConfigurationHook.m */,
 			);
 			path = NSURLProtocol;
 			sourceTree = "<group>";

@@ -33,7 +33,9 @@
 
 //    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:nil sessionConfiguration:configuration];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:@"http://www.baidu.com" parameters:nil headers:nil progress:nil success:nil failure:nil];
+//    [manager GET:@"http://www.baidu.com" parameters:nil headers:nil progress:nil success:nil failure:nil];
+    
+    [manager POST:@"http://www.baidu.com" parameters:@{@"key": @"123"} headers:nil progress:nil success:nil failure:nil];
   
     
     //    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://xiaozhuanlan.com"]];

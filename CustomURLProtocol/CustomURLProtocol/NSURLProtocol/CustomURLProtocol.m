@@ -69,8 +69,8 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
 //开始请求
 - (void)startLoading
 {
-    
-    NSLog(@"***监听接口：%@", self.request.URL.absoluteString);
+    NSURLRequest *bodyRequest = [self handlePostRequestBodyWithRequest:self.request];
+    NSLog(@"***监听接口：%@ ***body: %@", self.request.URL.absoluteString,[[NSString alloc]initWithData:bodyRequest.HTTPBody encoding:NSUTF8StringEncoding]);
     
     NSMutableURLRequest *mutableReqeust = [[self request] mutableCopy];
     //标示该request已经处理过了，防止无限循环
@@ -106,6 +106,89 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
 - (void)stopLoading {
     [self.session invalidateAndCancel];
     self.session = nil;
+}
+
+//MARK: - 处理POST请求，用HTTPBodyStream来处理body体
+- (NSMutableURLRequest *)handlePostRequestBodyWithRequest:(NSURLRequest *)request {
+    NSMutableURLRequest * req = [request mutableCopy];
+    if ([request.HTTPMethod isEqualToString:@"POST"]) {
+        if (!request.HTTPBody) {
+            uint8_t d[1024] = {0};
+            NSInputStream *stream = request.HTTPBodyStream;
+            NSMutableData *data = [[NSMutableData alloc] init];
+            [stream open];
+            while ([stream hasBytesAvailable]) {
+                NSInteger len = [stream read:d maxLength:1024];
+                if (len > 0 && stream.streamError == nil) {
+                    [data appendBytes:(void *)d length:len];
+                }
+            }
+            req.HTTPBody = [data copy];
+            [stream close];
+        }
+    }
+    return req;
+}
+
+//MARK:－　评估当前serverTrust是否可信任
+- (BOOL)evaluateServerTrust:(SecTrustRef)serverTrust
+                  forDomain:(NSString *)domain {
+    /*
+     * 创建证书校验策略
+     */
+    NSMutableArray *policies = [NSMutableArray array];
+    if (domain) {
+        [policies addObject:(__bridge_transfer id)SecPolicyCreateSSL(true, (__bridge CFStringRef)domain)];
+    } else {
+        [policies addObject:(__bridge_transfer id)SecPolicyCreateBasicX509()];
+    }
+    /*
+     * 绑定校验策略到服务端的证书上
+     */
+    SecTrustSetPolicies(serverTrust, (__bridge CFArrayRef)policies);
+    /*
+     * 评估当前serverTrust是否可信任，
+     * 官方建议在result = kSecTrustResultUnspecified 或 kSecTrustResultProceed
+     * 的情况下serverTrust可以被验证通过，https://developer.apple.com/library/ios/technotes/tn2232/_index.html
+     * 关于SecTrustResultType的详细信息请参考SecTrust.h
+     */
+    SecTrustResultType result;
+    SecTrustEvaluate(serverTrust, &result);
+    return (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
+}
+
+//MARK: - NSURLSessionDelegate
+
+///询问>>服务器需要客户端配合验证--任务级别
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
+    if (!challenge) {
+        return;
+    }
+    NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    NSURLCredential *credential = nil;
+    /*
+     * 获取原始域名信息。
+     */
+    NSString* host = [[self.request allHTTPHeaderFields] objectForKey:@"host"];
+    if (!host) {
+        host = self.request.URL.host;
+    }
+    
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        if([self evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:host]) {
+            disposition = NSURLSessionAuthChallengeUseCredential;
+            credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+        } else {
+            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        }
+    } else {
+        disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    }
+    
+    // 对于其他的challenges直接使用默认的验证方案
+    completionHandler(disposition,credential);
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
