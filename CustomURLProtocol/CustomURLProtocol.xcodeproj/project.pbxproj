@@ -35,6 +35,7 @@
 		EA58031D248BA44700305429 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580309248BA44600305429 /* AFURLRequestSerialization.m */; };
 		EA58031E248BA44700305429 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA58030B248BA44600305429 /* AFNetworkReachabilityManager.m */; };
 		EA58031F248BA44700305429 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = EA58030C248BA44600305429 /* AFSecurityPolicy.m */; };
+		EA580322248BD75200305429 /* HttpDNSTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580321248BD75200305429 /* HttpDNSTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,8 @@
 		EA58030C248BA44600305429 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
 		EA58030D248BA44600305429 /* AFCompatibilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFCompatibilityMacros.h; sourceTree = "<group>"; };
 		EA58030E248BA44600305429 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		EA580320248BD75200305429 /* HttpDNSTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpDNSTool.h; sourceTree = "<group>"; };
+		EA580321248BD75200305429 /* HttpDNSTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpDNSTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +205,8 @@
 			children = (
 				EA5802E4248BA40500305429 /* CustomURLProtocol.h */,
 				EA5802E6248BA40500305429 /* CustomURLProtocol.m */,
+				EA580320248BD75200305429 /* HttpDNSTool.h */,
+				EA580321248BD75200305429 /* HttpDNSTool.m */,
 				EA5802E3248BA40500305429 /* SessionConfigurationHook.h */,
 				EA5802E5248BA40500305429 /* SessionConfigurationHook.m */,
 			);
@@ -407,6 +412,7 @@
 				EA5802AF248BA3ED00305429 /* AppDelegate.m in Sources */,
 				EA58031F248BA44700305429 /* AFSecurityPolicy.m in Sources */,
 				EA580318248BA44700305429 /* AFAutoPurgingImageCache.m in Sources */,
+				EA580322248BD75200305429 /* HttpDNSTool.m in Sources */,
 				EA5802C0248BA3EE00305429 /* main.m in Sources */,
 				EA5802E7248BA40500305429 /* SessionConfigurationHook.m in Sources */,
 				EA58031C248BA44700305429 /* AFURLSessionManager.m in Sources */,

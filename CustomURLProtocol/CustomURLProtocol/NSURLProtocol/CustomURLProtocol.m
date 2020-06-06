@@ -8,6 +8,7 @@
 
 #import "CustomURLProtocol.h"
 #import "SessionConfigurationHook.h"
+#import "HttpDNSTool.h"
 
 static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
 
@@ -76,13 +77,36 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
     //标示该request已经处理过了，防止无限循环
     [NSURLProtocol setProperty:@(YES) forKey:URLProtocolHandledKey inRequest:mutableReqeust];
     
+    NSMutableURLRequest *mutableReq = [mutableReqeust mutableCopy];
+    NSString *originalUrl = mutableReq.URL.absoluteString;
+    NSURL *url = [NSURL URLWithString:originalUrl];
+    
+    /*
+     同步接口获取IP地址，这里的获取ip，可以启动的时候服务器下发或者HTTPDNS解析获取
+     */
+    NSArray *ipArr = [[HttpDNSTool shareInstance] getDNSsWithDormain:url.host];
+    NSString *ip = ipArr.firstObject;
+    if (ip) {
+        // 获取IP成功，进行URL替换和HOST头设置
+        NSRange hostFirstRange = [originalUrl rangeOfString:url.host];
+        if (NSNotFound != hostFirstRange.location) {
+            
+            NSString *ipURL = [mutableReq.URL.absoluteString stringByReplacingCharactersInRange:hostFirstRange withString:ip];
+             mutableReq.URL = [NSURL URLWithString:ipURL];
+            // 添加原始URL的host
+            [mutableReq setValue:url.host forHTTPHeaderField:@"host"];
+            // 添加originalUrl保存原始URL
+            [mutableReq addValue:originalUrl forHTTPHeaderField:@"originalUrl"];
+        }
+    }
+    
     //这个enableDebug随便根据自己的需求了，可以直接拦截到数据返回本地的模拟数据，进行测试
     BOOL enableDebug = NO;
     if (enableDebug) {
         
         NSString *str = @"测试数据";
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:mutableReqeust.URL
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:mutableReq.URL
                                                             MIMEType:@"text/plain"
                                                expectedContentLength:data.length
                                                     textEncodingName:nil];
@@ -97,7 +121,7 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
         self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:mainQueue];
-        NSURLSessionDataTask *task = [self.session dataTaskWithRequest:mutableReqeust];
+        NSURLSessionDataTask *task = [self.session dataTaskWithRequest:mutableReq];
         [task resume];
     }
 }
@@ -159,7 +183,15 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
 
 //MARK: - NSURLSessionDelegate
 
-///询问>>服务器需要客户端配合验证--任务级别
+
+/*
+ 如果服务器要求验证客户端身份或向客户端提供其证书用于验证时，则会调用
+ 响应来自远程服务器的会话级别认证请求，从代理请求凭据。
+ 
+ 这种方法在两种情况下被调用：
+ 1、远程服务器请求客户端证书或Windows NT LAN Manager（NTLM）身份验证时，允许您的应用程序提供适当的凭据
+ 2、当会话首先建立与使用SSL或TLS的远程服务器的连接时，允许您的应用程序验证服务器的证书链
+ */
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
