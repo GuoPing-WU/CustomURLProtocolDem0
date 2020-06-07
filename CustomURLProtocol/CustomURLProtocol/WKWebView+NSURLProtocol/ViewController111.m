@@ -63,9 +63,14 @@
         if (@available(iOS 11.0, *)) {
             WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
             CustomURLSchemeHandler *handler = [CustomURLSchemeHandler new];
-            //设置URLSchemeHandler来处理特定URLScheme的请求，CustomURLSchemeHandler需要实现WKURLSchemeHandler协议，用来拦截customScheme的请求。
+            //支持https和http的方法1  这个需要去hook +[WKwebview handlesURLScheme]的方法,可以去看WKWebView+Custome类的实现
             [configuration setURLSchemeHandler:handler forURLScheme:@"https"];
             [configuration setURLSchemeHandler:handler forURLScheme:@"http"];
+            
+                //hook系统的方法2   xcode11可能会运行直接崩溃,因为用到了私有变量
+            //    NSMutableDictionary *handlers = [configuration valueForKey:@"_urlSchemeHandlers"];
+            //    handlers[@"https"] = handler;//修改handler,将HTTP和HTTPS也一起拦截
+            //    handlers[@"http"] = handler;
             
             _webView = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:configuration];
         }else{
