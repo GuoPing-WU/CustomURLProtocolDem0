@@ -36,6 +36,12 @@
 		EA58031E248BA44700305429 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA58030B248BA44600305429 /* AFNetworkReachabilityManager.m */; };
 		EA58031F248BA44700305429 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = EA58030C248BA44600305429 /* AFSecurityPolicy.m */; };
 		EA580322248BD75200305429 /* HttpDNSTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580321248BD75200305429 /* HttpDNSTool.m */; };
+		EA580325248BE2F500305429 /* NSURLProtocol+WebKitSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580323248BE2F500305429 /* NSURLProtocol+WebKitSupport.m */; };
+		EA580327248BE40C00305429 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = EA580326248BE40C00305429 /* image.png */; };
+		EA58032B248BE43E00305429 /* ReplacingImageURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580329248BE43D00305429 /* ReplacingImageURLProtocol.m */; };
+		EA58032E248BE72000305429 /* ViewController111.m in Sources */ = {isa = PBXBuildFile; fileRef = EA58032D248BE72000305429 /* ViewController111.m */; };
+		EA580331248BEC2600305429 /* CustomURLSchemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580330248BEC2600305429 /* CustomURLSchemeHandler.m */; };
+		EA580334248BED0D00305429 /* WKWebView+Custome.m in Sources */ = {isa = PBXBuildFile; fileRef = EA580332248BED0D00305429 /* WKWebView+Custome.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +121,17 @@
 		EA58030E248BA44600305429 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		EA580320248BD75200305429 /* HttpDNSTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpDNSTool.h; sourceTree = "<group>"; };
 		EA580321248BD75200305429 /* HttpDNSTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HttpDNSTool.m; sourceTree = "<group>"; };
+		EA580323248BE2F500305429 /* NSURLProtocol+WebKitSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLProtocol+WebKitSupport.m"; sourceTree = "<group>"; };
+		EA580324248BE2F500305429 /* NSURLProtocol+WebKitSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLProtocol+WebKitSupport.h"; sourceTree = "<group>"; };
+		EA580326248BE40C00305429 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
+		EA580329248BE43D00305429 /* ReplacingImageURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplacingImageURLProtocol.m; sourceTree = "<group>"; };
+		EA58032A248BE43E00305429 /* ReplacingImageURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplacingImageURLProtocol.h; sourceTree = "<group>"; };
+		EA58032C248BE72000305429 /* ViewController111.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController111.h; sourceTree = "<group>"; };
+		EA58032D248BE72000305429 /* ViewController111.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController111.m; sourceTree = "<group>"; };
+		EA58032F248BEC2600305429 /* CustomURLSchemeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomURLSchemeHandler.h; sourceTree = "<group>"; };
+		EA580330248BEC2600305429 /* CustomURLSchemeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomURLSchemeHandler.m; sourceTree = "<group>"; };
+		EA580332248BED0D00305429 /* WKWebView+Custome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+Custome.m"; sourceTree = "<group>"; };
+		EA580333248BED0D00305429 /* WKWebView+Custome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+Custome.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +182,7 @@
 		EA5802AC248BA3ED00305429 /* CustomURLProtocol */ = {
 			isa = PBXGroup;
 			children = (
+				EA580328248BE41500305429 /* WKWebView+NSURLProtocol */,
 				EA5802E9248BA44600305429 /* AFNetworking */,
 				EA5802E2248BA40500305429 /* NSURLProtocol */,
 				EA5802AD248BA3ED00305429 /* AppDelegate.h */,
@@ -173,6 +191,7 @@
 				EA5802B1248BA3ED00305429 /* SceneDelegate.m */,
 				EA5802B3248BA3ED00305429 /* ViewController.h */,
 				EA5802B4248BA3ED00305429 /* ViewController.m */,
+				EA580326248BE40C00305429 /* image.png */,
 				EA5802B6248BA3ED00305429 /* Main.storyboard */,
 				EA5802B9248BA3EE00305429 /* Assets.xcassets */,
 				EA5802BB248BA3EE00305429 /* LaunchScreen.storyboard */,
@@ -269,6 +288,23 @@
 				EA58030E248BA44600305429 /* AFHTTPSessionManager.h */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		EA580328248BE41500305429 /* WKWebView+NSURLProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				EA58032A248BE43E00305429 /* ReplacingImageURLProtocol.h */,
+				EA580329248BE43D00305429 /* ReplacingImageURLProtocol.m */,
+				EA580324248BE2F500305429 /* NSURLProtocol+WebKitSupport.h */,
+				EA580323248BE2F500305429 /* NSURLProtocol+WebKitSupport.m */,
+				EA58032C248BE72000305429 /* ViewController111.h */,
+				EA58032D248BE72000305429 /* ViewController111.m */,
+				EA58032F248BEC2600305429 /* CustomURLSchemeHandler.h */,
+				EA580330248BEC2600305429 /* CustomURLSchemeHandler.m */,
+				EA580333248BED0D00305429 /* WKWebView+Custome.h */,
+				EA580332248BED0D00305429 /* WKWebView+Custome.m */,
+			);
+			path = "WKWebView+NSURLProtocol";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,6 +415,7 @@
 				EA580310248BA44700305429 /* README.md in Resources */,
 				EA58030F248BA44700305429 /* LICENSE in Resources */,
 				EA5802B8248BA3ED00305429 /* Main.storyboard in Resources */,
+				EA580327248BE40C00305429 /* image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +442,9 @@
 			files = (
 				EA580311248BA44700305429 /* UIProgressView+AFNetworking.m in Sources */,
 				EA5802B5248BA3ED00305429 /* ViewController.m in Sources */,
+				EA580331248BEC2600305429 /* CustomURLSchemeHandler.m in Sources */,
 				EA58031E248BA44700305429 /* AFNetworkReachabilityManager.m in Sources */,
+				EA58032B248BE43E00305429 /* ReplacingImageURLProtocol.m in Sources */,
 				EA580319248BA44700305429 /* AFImageDownloader.m in Sources */,
 				EA580316248BA44700305429 /* UIButton+AFNetworking.m in Sources */,
 				EA580312248BA44700305429 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -413,6 +452,8 @@
 				EA58031F248BA44700305429 /* AFSecurityPolicy.m in Sources */,
 				EA580318248BA44700305429 /* AFAutoPurgingImageCache.m in Sources */,
 				EA580322248BD75200305429 /* HttpDNSTool.m in Sources */,
+				EA580334248BED0D00305429 /* WKWebView+Custome.m in Sources */,
+				EA580325248BE2F500305429 /* NSURLProtocol+WebKitSupport.m in Sources */,
 				EA5802C0248BA3EE00305429 /* main.m in Sources */,
 				EA5802E7248BA40500305429 /* SessionConfigurationHook.m in Sources */,
 				EA58031C248BA44700305429 /* AFURLSessionManager.m in Sources */,
@@ -425,6 +466,7 @@
 				EA58031A248BA44700305429 /* AFURLResponseSerialization.m in Sources */,
 				EA58031B248BA44700305429 /* AFHTTPSessionManager.m in Sources */,
 				EA580317248BA44700305429 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				EA58032E248BE72000305429 /* ViewController111.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
